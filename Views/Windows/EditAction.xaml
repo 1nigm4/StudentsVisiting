@@ -1,4 +1,4 @@
-﻿<Window x:Class="StudentsVisiting.Views.Windows.AddAction"
+﻿<Window x:Class="StudentsVisiting.Views.Windows.EditAction"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,6 +12,10 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Name="Subject" Content="Предмет: "/>
+                <TextBox Name="IdleCount" MinWidth="120"/>
+            </StackPanel>
             <Label Content="Фамилия"/>
             <TextBox Name="LastName"/>
             <Label Content="Имя"/>
@@ -21,12 +25,8 @@
             <Label Content="Группа"/>
             <ComboBox Name="Groups"/>
         </StackPanel>
-        <StackPanel Name="Group" Background="White">
-            <Label Content="Название группы" FontSize="16" HorizontalAlignment="Center" Margin="0 80 0 0"/>
-            <TextBox Name="GroupName" FontSize="16" MinWidth="160" Margin="0 10" HorizontalAlignment="Center"/>
-        </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10">
-            <Button Name="AddButton" Content="Добавить" Margin="10 0"/>
+            <Button Name="EditButton" Content="Изменить" Click="EditStudent_OnClick" Margin="10 0"/>
             <Button Content="Отмена" Click="Cancel_OnClick"/>
         </StackPanel>
     </Grid>

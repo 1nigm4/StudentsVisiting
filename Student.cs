@@ -11,12 +11,14 @@ namespace StudentsVisiting
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class Student
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Student()
         {
+            this.Id = 1 + (App.Database.Students.Local.LastOrDefault()?.Id ?? 0);
             this.Idles = new HashSet<Idle>();
         }
     

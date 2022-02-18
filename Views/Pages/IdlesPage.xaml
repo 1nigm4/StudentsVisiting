@@ -4,10 +4,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:StudentsVisiting.Views.Pages"
+      xmlns:cv="clr-namespace:StudentsVisiting.Views.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="IdlesPage">
-
+    <Page.Resources>
+        <cv:IdlesConverter x:Key="IdlesConverter"/>
+        <CollectionViewSource x:Key="Students" Source="{Binding Students}"/>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -15,23 +19,34 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBox Name="Search"/>
+        <StackPanel Orientation="Horizontal">
+            <ComboBox Name="Subjects" SelectionChanged="Subjects_OnSelectionChanged" MinWidth="140"/>
+            <ComboBox Name="Groups" SelectionChanged="Groups_OnSelectionChanged" MinWidth="140" Margin="10 0"/>
+            <TextBox Name="Search" MinWidth="300"/>
+        </StackPanel>
         
-        <DataGrid Name="Idles" Grid.Row="1" AutoGenerateColumns="False">
+        <DataGrid Name="Students" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="№" Binding="{Binding Id}"/>
-                <DataGridTextColumn Header="ФИО" Binding="{Binding}"/>
-                <DataGridTextColumn Header="Пропуски" Binding="{Binding Idles}"/>
+                <DataGridTextColumn Header="№" Binding="{Binding Id}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="ФИО" Binding="{Binding}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Пропуски" Width="*">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource IdlesConverter}" TargetNullValue="0">
+                            <Binding RelativeSource="{RelativeSource Self}" Path="DataContext"/>
+                            <Binding Path="Idles"/>
+                            <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType=Page}"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <ComboBox Name="Groups"/>
-            <ComboBox Name="Subjects"/>
             <Button Name="AddGroup" Content="Добавить группу" Click="AddAction_OnClick" MinWidth="120"/>
-            <Button Name="AddStudent" Content="Добавить студента" Click="AddAction_OnClick" MinWidth="120"/>
-            <Button Content="Редактировать" MinWidth="120"/>
-            <Button Content="Удалить" MinWidth="120"/>
+            <Button Name="AddStudent" Content="Добавить студента" Click="AddAction_OnClick" MinWidth="120" Margin="10 0"/>
+            <Button Content="Редактировать" Click="Edit_OnClick" MinWidth="120"/>
+            <Button Content="Удалить" Click="Delete_OnClick" MinWidth="120" Margin="10 0"/>
+            <Button Content="Сохранить изменения" Click="Save_OnClick" MinWidth="120"/>
         </StackPanel>
     </Grid>
 </Page>

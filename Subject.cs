@@ -25,5 +25,6 @@ namespace StudentsVisiting
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Idle> Idles { get; set; }
+        public override string ToString() => Title;
     }
 }

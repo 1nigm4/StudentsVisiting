@@ -20,12 +20,6 @@ namespace StudentsVisiting
         {
         }
 
-        private static DataBase context;
-        public static DataBase Context
-        {
-            get => context ??= new DataBase();
-        }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

@@ -82,6 +82,7 @@
     <Compile Include="Subject.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Views\Converters\IdlesConverter.cs" />
     <Compile Include="Views\Pages\AuthPage.xaml.cs">
       <DependentUpon>AuthPage.xaml</DependentUpon>
     </Compile>
@@ -91,6 +92,9 @@
     </Compile>
     <Compile Include="Views\Pages\IdlesPage.xaml.cs">
       <DependentUpon>IdlesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\EditAction.xaml.cs">
+      <DependentUpon>EditAction.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\AddAction.xaml.cs">
       <DependentUpon>AddAction.xaml</DependentUpon>
@@ -105,6 +109,10 @@
     <Page Include="Views\Pages\IdlesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\EditAction.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Windows\AddAction.xaml">
       <SubType>Designer</SubType>
