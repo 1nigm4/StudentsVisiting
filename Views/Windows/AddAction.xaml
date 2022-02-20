@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudentsVisiting.Views.Windows"
         mc:Ignorable="d"
-        Title="AddAction" Height="300" Width="350" ResizeMode="NoResize">
+        Title="Добавление" Height="300" Width="350" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
@@ -21,7 +21,7 @@
             <Label Content="Группа"/>
             <ComboBox Name="Groups"/>
         </StackPanel>
-        <StackPanel Name="Group" Background="White">
+        <StackPanel Name="Group" Background="White" Visibility="Visible">
             <Label Content="Название группы" FontSize="16" HorizontalAlignment="Center" Margin="0 80 0 0"/>
             <TextBox Name="GroupName" FontSize="16" MinWidth="160" Margin="0 10" HorizontalAlignment="Center"/>
         </StackPanel>

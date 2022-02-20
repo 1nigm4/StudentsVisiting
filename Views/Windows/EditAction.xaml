@@ -5,17 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudentsVisiting.Views.Windows"
         mc:Ignorable="d"
-        Title="AddAction" Height="300" Width="350" ResizeMode="NoResize">
+        Title="Редактирование" Height="315" Width="300" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Name="Subject" Content="Предмет: "/>
-                <TextBox Name="IdleCount" MinWidth="120"/>
-            </StackPanel>
+            <Label Name="Subject" Content="Предмет: " FontWeight="Bold" HorizontalContentAlignment="Center"/>
             <Label Content="Фамилия"/>
             <TextBox Name="LastName"/>
             <Label Content="Имя"/>
@@ -24,9 +21,13 @@
             <TextBox Name="Patronymic"/>
             <Label Content="Группа"/>
             <ComboBox Name="Groups"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Пропусков: "/>
+                <TextBox Name="IdleCount" MinWidth="120" Margin="0 4"/>
+            </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10">
-            <Button Name="EditButton" Content="Изменить" Click="EditStudent_OnClick" Margin="10 0"/>
+            <Button Content="Изменить" Click="EditStudent_OnClick" Margin="10 0"/>
             <Button Content="Отмена" Click="Cancel_OnClick"/>
         </StackPanel>
     </Grid>

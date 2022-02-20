@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace StudentsVisiting.Views.Windows
 {
@@ -44,7 +34,7 @@ namespace StudentsVisiting.Views.Windows
                 string.IsNullOrWhiteSpace(LastName.Text) ||
                 string.IsNullOrWhiteSpace(Name.Text) ||
                 string.IsNullOrWhiteSpace(Patronymic.Text) ||
-                Groups.SelectedItem == null)
+                Groups.SelectedItem is not Group group)
             {
                 MessageBox.Show("Необходимо заполнить все поля", "Редактирование", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -53,7 +43,7 @@ namespace StudentsVisiting.Views.Windows
             student.LastName = LastName.Text;
             student.Name = Name.Text;
             student.Patronymic = Patronymic.Text;
-            student.Group = Groups.SelectedItem as Group;
+            student.Group = group;
             student.Idles.First(i => i.Subject == subject).Count = int.Parse(IdleCount.Text);
 
             MessageBox.Show("Студент успешно обновлён", "Редактирование", MessageBoxButton.OK, MessageBoxImage.Information);

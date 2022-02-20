@@ -13,13 +13,13 @@ namespace StudentsVisiting
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DataBase : DbContext
+    public partial class Database : DbContext
     {
-        public DataBase()
-            : base("name=DataBase")
+        public Database()
+            : base("name=Database")
         {
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

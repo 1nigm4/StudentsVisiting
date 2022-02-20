@@ -1,12 +1,9 @@
 ﻿using StudentsVisiting.Views.Pages;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace StudentsVisiting.Views.Converters
@@ -16,8 +13,7 @@ namespace StudentsVisiting.Views.Converters
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(values[0] is Student student)) return null;
-            if (student.Group == null) return null;
-            if (!(values[2] is IdlesPage page)) return null;
+            if (!(values[1] is IdlesPage page)) return null;
             if (!(page.Subjects.SelectedItem is Subject subject)) return null;
 
             BindingList<Idle> idles = App.Database.Idles.Local.ToBindingList();

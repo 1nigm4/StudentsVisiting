@@ -1,26 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace StudentsVisiting.Views.Windows
 {
     public partial class AddAction : Window
     {
-        private bool isAddGroup;
         public AddAction(bool isAddGroup)
         {
             InitializeComponent();
-            this.isAddGroup = isAddGroup;
             Group.Visibility = isAddGroup ? Visibility.Visible : Visibility.Hidden;
             Groups.ItemsSource = App.Database.Groups.Local.ToList();
             AddButton.Click += isAddGroup ? AddGroup_OnClick : AddStudent_OnClick;
@@ -31,7 +18,7 @@ namespace StudentsVisiting.Views.Windows
             if (string.IsNullOrWhiteSpace(LastName.Text) ||
                 string.IsNullOrWhiteSpace(Name.Text) ||
                 string.IsNullOrWhiteSpace(Patronymic.Text) ||
-                Groups.SelectedItem == null)
+                Groups.SelectedItem is not Group group)
             {
                 MessageBox.Show("Необходимо заполнить все поля", "Добавление", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -42,7 +29,7 @@ namespace StudentsVisiting.Views.Windows
                 LastName = LastName.Text,
                 Name = Name.Text,
                 Patronymic = Patronymic.Text,
-                Group = Groups.SelectedItem as Group
+                Group = group
             };
 
             App.Database.Students.Local.Add(student);

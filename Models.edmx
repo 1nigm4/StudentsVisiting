@@ -4,13 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище Models" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище Models" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Groups">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Idles">
           <Key>
@@ -26,9 +26,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LastName" Type="nchar" MaxLength="50" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="50" Nullable="false" />
-          <Property Name="Patronymic" Type="nchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="GroupId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Subjects">
@@ -36,10 +36,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <Association Name="FK_Idles_Students">
-          <End Role="Students" Type="Self.Students" Multiplicity="1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Idles" Type="Self.Idles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Students">
@@ -51,7 +53,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Idles_Subjects">
-          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Idles" Type="Self.Idles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Subjects">
@@ -62,8 +66,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Group_fk">
-          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+        <Association Name="FK_Students_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Students" Type="Self.Students" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Groups">
@@ -87,12 +93,13 @@
             <End Role="Subjects" EntitySet="Subjects" />
             <End Role="Idles" EntitySet="Idles" />
           </AssociationSet>
-          <AssociationSet Name="Group_fk" Association="Self.Group_fk">
+          <AssociationSet Name="FK_Students_Groups" Association="Self.FK_Students_Groups">
             <End Role="Groups" EntitySet="Groups" />
             <End Role="Students" EntitySet="Students" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -101,8 +108,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Students" Relationship="Self.Group_fk" FromRole="Groups" ToRole="Students" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Students" Relationship="Self.FK_Students_Groups" FromRole="Groups" ToRole="Students" />
         </EntityType>
         <EntityType Name="Idle">
           <Key>
@@ -111,20 +118,20 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SubjectId" Type="Int32" Nullable="false" />
           <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Student" Relationship="Self.FK_Idles_Students" FromRole="Idles" ToRole="Students" />
           <NavigationProperty Name="Subject" Relationship="Self.FK_Idles_Subjects" FromRole="Idles" ToRole="Subjects" />
-          <Property Name="Count" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="GroupId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Group" Relationship="Self.Group_fk" FromRole="Students" ToRole="Groups" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_Students_Groups" FromRole="Students" ToRole="Groups" />
           <NavigationProperty Name="Idles" Relationship="Self.FK_Idles_Students" FromRole="Students" ToRole="Idles" />
         </EntityType>
         <EntityType Name="Subject">
@@ -132,11 +139,13 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Idles" Relationship="Self.FK_Idles_Subjects" FromRole="Subjects" ToRole="Idles" />
         </EntityType>
-        <Association Name="Group_fk">
-          <End Role="Groups" Type="Self.Group" Multiplicity="1" />
+        <Association Name="FK_Students_Groups">
+          <End Role="Groups" Type="Self.Group" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Students" Type="Self.Student" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Groups">
@@ -148,7 +157,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Idles_Students">
-          <End Role="Students" Type="Self.Student" Multiplicity="1" />
+          <End Role="Students" Type="Self.Student" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Idles" Type="Self.Idle" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Students">
@@ -160,7 +171,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Idles_Subjects">
-          <End Role="Subjects" Type="Self.Subject" Multiplicity="1" />
+          <End Role="Subjects" Type="Self.Subject" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Idles" Type="Self.Idle" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Subjects">
@@ -171,12 +184,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DataBase" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Database" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Groups" EntityType="Self.Group" />
           <EntitySet Name="Idles" EntityType="Self.Idle" />
           <EntitySet Name="Students" EntityType="Self.Student" />
           <EntitySet Name="Subjects" EntityType="Self.Subject" />
-          <AssociationSet Name="Group_fk" Association="Self.Group_fk">
+          <AssociationSet Name="FK_Students_Groups" Association="Self.FK_Students_Groups">
             <End Role="Groups" EntitySet="Groups" />
             <End Role="Students" EntitySet="Students" />
           </AssociationSet>
@@ -194,7 +207,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище ModelsContainer" CdmEntityContainer="DataBase">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ModelsContainer" CdmEntityContainer="Database">
           <EntitySetMapping Name="Groups">
             <EntityTypeMapping TypeName="Models.Group">
               <MappingFragment StoreEntitySet="Groups">
@@ -206,10 +219,10 @@
           <EntitySetMapping Name="Idles">
             <EntityTypeMapping TypeName="Models.Idle">
               <MappingFragment StoreEntitySet="Idles">
-                <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

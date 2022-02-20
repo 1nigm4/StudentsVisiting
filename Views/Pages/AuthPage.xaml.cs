@@ -1,18 +1,6 @@
 ﻿using StudentsVisiting.Views.Windows;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace StudentsVisiting.Views.Pages
 {
@@ -27,6 +15,8 @@ namespace StudentsVisiting.Views.Pages
         {
             if (Login.Text == "admin" && Pass.Password == "admin")
                 MainWindow.Navigate(new IdlesPage());
+            else
+                MessageBox.Show("Неверный логин или пароль!", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }
